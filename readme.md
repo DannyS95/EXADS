@@ -17,5 +17,6 @@ Docker compose is configured to run the container in the background.
 # Project structure
 * The entry point to every custom command is inside src/Command folder, every service is injected with Auto Wiring.
 * Every command has two services, the service that has the functions with the operations we need to perform and a service that outputs that result into the console.
+* There is an SQL script and database data dump that runs on docker project installation, check /database folder.
 * This project also makes use of ***Doctrine***, Dto's and transformers.
 * Short hands for the commands work well such as:  _print, ascii, next-tv, ab-test..._ 
