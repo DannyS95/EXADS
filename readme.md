@@ -11,6 +11,9 @@ Docker compose is configured to run the container in the background.
 * many commands can also be ran or added inside the composer file.
 * Simply run php bin/console list you will find all the commands there
 
+<br>
+
+
 # Project structure
 * The entry point to every custom command is inside src/Command folder, every service is injected with Auto Wiring.
 * Every command has two services, the service that has the functions with the operations we need to perform and a service that outputs that result into the console.
