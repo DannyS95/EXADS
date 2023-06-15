@@ -1,0 +1,32 @@
+networks:
+    exads:
+    
+services:
+  exads:
+    build: .
+    container_name: exads
+    image: exads
+    ports:
+      - "8000:80"
+    networks:
+      - exads
+    depends_on:
+      - mysql
+    tty: true
+      
+  mysql:
+    image: mysql
+    container_name: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_DATABASE: 'exads'
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_USER: 'exads'
+      MYSQL_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+    networks:
+      - exads
