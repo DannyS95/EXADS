@@ -6,37 +6,37 @@ class PrimeFactorization
 {
     private int $number;
 
-    private array $primeFactors;
+    private array $factors;
 
     /**
      * Get the value of multiples.
      *
      * @return array<string>
      */
-    public function getPrimeFactorizationData(): array
+    public function getFactors(): array
     {
-        $this->setPrimeFactorization();
+        $this->setFactors();
 
-        return $this->primeFactors;
+        return $this->factors;
     }
 
     /**
      * Set the value of multiples.
      */
-    private function setPrimeFactorization(): self
+    private function setFactors(): self
     {
-        $this->primeFactors = [1];
+        $this->factors = [1];
 
         for ($i = 2; $i < $this->number; ++$i) {
             if (0 === bccomp(bcmod($this->number, $i), 0)) {
-                $this->primeFactors[] = $i;
+                $this->factors[] = $i;
             }
         }
 
-        $this->primeFactors[] = $this->number;
+        $this->factors[] = $this->number;
 
-        if (2 === count($this->primeFactors)) {
-            $this->primeFactors = ['PRIME'];
+        if (2 === count($this->factors)) {
+            $this->factors = ['PRIME'];
         }
 
         return $this;

@@ -11,10 +11,10 @@ use App\Dto\PrimeFactorsDto;
 class PrintService
 {
     public function printFactors(PrimeFactorsDto $primeFactorsDto): void
-    {g
+    {
         foreach ($primeFactorsDto->getPrimeFactors() as $number => $primeFactors) {
             ++$number;
-            echo "The factors of number $number are: $primeFactors \n";
+            echo "The factors of number $number are: {{$primeFactors}} \n";
         }
     }
 

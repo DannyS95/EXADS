@@ -45,7 +45,7 @@ class PrimeNumbersService
     {
         $model = new PrimeFactorization();
         $this->numbers = array_map(function ($number) use ($model) {
-            return $model->setNumber($number)->getPrimeFactorizationData();
+            return $model->setNumber($number)->getFactors();
         }, $this->numbers);
 
         return $this;
