@@ -36,7 +36,7 @@ class PrimeNumbersCommand extends Command
     {
         $primeFactors = $this->primeNumbersService->createRangeOfPrimeFactors(1, 100);
 
-        $this->printService->printPrimeFactors($primeFactors);
+        $this->printService->printFactors($primeFactors);
 
         return Command::SUCCESS;
     }

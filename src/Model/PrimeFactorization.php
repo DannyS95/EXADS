@@ -35,7 +35,7 @@ class PrimeFactorization
 
         $this->primeFactors[] = $this->number;
 
-        if (0 === count($this->primeFactors)) {
+        if (2 === count($this->primeFactors)) {
             $this->primeFactors = ['PRIME'];
         }
 
