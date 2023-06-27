@@ -4,11 +4,11 @@ namespace App\Command;
 
 use App\Dto\DesignDto;
 use App\Dto\DesignsDto;
-use App\Providers\ABTestDesignsProvider;
+use App\Console\ABTestingPrinter;
 use App\Services\ABTestingService;
-use App\Services\PrintService;
-use Symfony\Component\Console\Attribute\AsCommand;
+use App\Providers\ABTestDesignsProvider;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,15 +21,15 @@ class ABTestingCommand extends Command
 {
     private ABTestingService $abTestingService;
 
-    private PrintService $printService;
+    private ABTestingPrinter $abTestingPrinter;
 
     public function __construct(
         ABTestingService $abTestingService,
-        PrintService $printService
+        ABTestingPrinter $abTestingPrinter
     ) {
         parent::__construct();
         $this->abTestingService = $abTestingService;
-        $this->printService = $printService;
+        $this->abTestingPrinter = $abTestingPrinter;
     }
 
     protected function configure(): void
@@ -49,7 +49,7 @@ class ABTestingCommand extends Command
         /** @var DesignDto $bestDesign */
         $bestDesign = $this->abTestingService->getDesignBestWithConversionRate($designsDto);
 
-        $this->printService->printBestPromotionalDesign($bestDesign, $designsDto);
+        $this->abTestingPrinter->setMessage($bestDesign, $designsDto)->print($output);
 
         return Command::SUCCESS;
     }

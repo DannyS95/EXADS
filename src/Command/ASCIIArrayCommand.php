@@ -5,7 +5,7 @@ namespace App\Command;
 use App\Dto\ASCIIMissingRangeDto;
 use App\Dto\ASCIIRangeDto;
 use App\Services\AsciiRangeService;
-use App\Services\PrintService;
+use App\Console\ASCIIArrayPrinter;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,15 +21,15 @@ class ASCIIArrayCommand extends Command
 {
     private AsciiRangeService $asciiRangeService;
 
-    private PrintService $printService;
+    private ASCIIArrayPrinter $asciiArrayPrinter;
 
     public function __construct(
         AsciiRangeService $asciiRangeService,
-        PrintService $printService
+        ASCIIArrayPrinter $asciiArrayPrinter
     ) {
         parent::__construct();
         $this->asciiRangeService = $asciiRangeService;
-        $this->printService = $printService;
+        $this->asciiArrayPrinter = $asciiArrayPrinter;
     }
 
     protected function configure(): void
@@ -49,7 +49,7 @@ class ASCIIArrayCommand extends Command
 
         $missingChar = $this->asciiRangeService->findMissingCharacterFromTwoRanges($asciiMissingRangeDto);
 
-        $this->printService->printMissingAsciiCharacterFromAsciiRange($asciiMissingRangeDto, $missingChar);
+        $this->asciiArrayPrinter->setMessage($asciiMissingRangeDto, $missingChar)->print($output);
 
         return Command::SUCCESS;
     }

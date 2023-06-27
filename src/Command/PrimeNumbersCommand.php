@@ -2,10 +2,12 @@
 
 namespace App\Command;
 
-use App\Services\PrimeNumbersService;
+use App\Console\PrimeNumbersPrinter;
+use App\Dto\PrimeFactorsDto;
 use App\Services\PrintService;
-use Symfony\Component\Console\Attribute\AsCommand;
+use App\Services\PrimeNumbersService;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -17,15 +19,15 @@ class PrimeNumbersCommand extends Command
 {
     private PrimeNumbersService $primeNumbersService;
 
-    private PrintService $printService;
+    private PrimeNumbersPrinter $primeNumbersPrinter;
 
     public function __construct(
         PrimeNumbersService $primeNumbersService,
-        PrintService $printService
+        PrimeNumbersPrinter $primeNumbersPrinter
     ) {
         parent::__construct();
         $this->primeNumbersService = $primeNumbersService;
-        $this->printService = $printService;
+        $this->primeNumbersPrinter = $primeNumbersPrinter;
     }
 
     protected function configure(): void
@@ -34,9 +36,10 @@ class PrimeNumbersCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var PrimeFactorsDto $primeFactors */
         $primeFactors = $this->primeNumbersService->createRangeOfPrimeFactors(1, 100);
 
-        $this->printService->printFactors($primeFactors);
+        $this->primeNumbersPrinter->setMessage($primeFactors)->print($output);
 
         return Command::SUCCESS;
     }

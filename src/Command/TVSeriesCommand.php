@@ -3,10 +3,10 @@
 namespace App\Command;
 
 use App\Dto\TVSeriesProgramDto;
-use App\Services\PrintService;
+use App\Console\TVSeriesPrinter;
 use App\Services\TVSeriesService;
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -20,15 +20,15 @@ class TVSeriesCommand extends Command
 {
     private TVSeriesService $tvSeriesService;
 
-    private PrintService $printService;
+    private TVSeriesPrinter $tvSeriesPrinter;
 
     public function __construct(
         TVSeriesService $tvSeriesService,
-        PrintService $printService
+        TVSeriesPrinter $tvSeriesPrinter
     ) {
         parent::__construct();
         $this->tvSeriesService = $tvSeriesService;
-        $this->printService = $printService;
+        $this->tvSeriesPrinter = $tvSeriesPrinter;
     }
 
     protected function configure(): void
@@ -45,7 +45,7 @@ class TVSeriesCommand extends Command
 
         $tvSeriesProgramDto = $this->tvSeriesService->nextInProgram($tvSeriesProgramDto);
 
-        $this->printService->printTVSeries($tvSeriesProgramDto);
+        $this->tvSeriesPrinter->setMessage($tvSeriesProgramDto)->print($output);
 
         return Command::SUCCESS;
     }
